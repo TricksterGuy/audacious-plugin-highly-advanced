@@ -3,13 +3,13 @@ CPP=@CXX@
 LD=$(CPP)
 
 CFLAGS=@CFLAGS@
-CXXFLAGS=@CXXFLAGS@
-LDFLAGS=@LDFLAGS@
+CXXFLAGS=@CXXFLAGS@ -std=c++11
+LDFLAGS=@LDFLAGS@ -L/usr/local/lib -laudcore
 
-OBJS=gsf.o VBA/GBA.o VBA/Globals.o VBA/Sound.o VBA/Util.o VBA/bios.o VBA/memgzio.o VBA/snd_interp.o VBA/unzip.o linuxmain.o VBA/psftag.o
+OBJS=gsf.o VBA/GBA.o VBA/Globals.o VBA/Sound.o VBA/Util.o VBA/bios.o VBA/memgzio.o VBA/snd_interp.o VBA/unzip.o VBA/psftag.o plugin.o
 
 all: $(OBJS) 
-	$(LD) $(OBJS) $(LDFLAGS) -o playgsf
+	$(LD) $(OBJS) $(LDFLAGS) -o vba.a
 
 %.o: %.c %.h
 	$(CC) $(CFLAGS) -c $< -o $@

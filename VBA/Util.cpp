@@ -547,12 +547,6 @@ extern "C"
 }
 }
 
-#ifdef LINUX
-	#include "../types.h"
-#else
-	#include <windows.h>
-#endif
-
 /*void DisplayError (char * Message, ...) {
 	char Msg[400];
 	va_list ap;

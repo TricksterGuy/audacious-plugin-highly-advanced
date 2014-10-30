@@ -1,4 +1,4 @@
-AC_INIT(linuxmain.cpp)
+AC_INIT(plugin.cpp)
 
 AC_PROG_CC
 AC_CHECK_HEADERS(sys/soundcard.h)
@@ -8,13 +8,10 @@ AC_C_BIGENDIAN
 AC_C_INLINE
 AC_CANONICAL_HOST
 
-AC_CHECK_LIB(ao, ao_initialize, has_libao=yes , [
-	echo "Could not find libao. Please install it."
-	exit
-])
 
-CFLAGS="-DLINUX -I./VBA -DVERSION_STR=\\\"0.07\\\" -DHA_VERSION_STR=\\\"0.11\\\""
-LDFLAGS="-lz -lresample -lao -L/usr/lib/x86_64-linux-gnu/"
+CFLAGS="-DLINUX -std=c++11 -I./VBA -DVERSION_STR=\\\"0.07\\\" -DHA_VERSION_STR=\\\"0.11\\\""
+CXXFLAGS=="-DLINUX -std=c++11 -I./VBA -DVERSION_STR=\\\"0.07\\\" -DHA_VERSION_STR=\\\"0.11\\\""
+LDFLAGS="-lz -lresample -L/usr/lib/x86_64-linux-gnu/"
 
 use_c_core=yes
 auto_c_core=yes

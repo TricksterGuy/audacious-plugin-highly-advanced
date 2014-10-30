@@ -63,4 +63,5 @@ extern int utilGzRead(gzFile file, voidp buffer, unsigned int len);
 extern int utilGzClose(gzFile file);
 extern long utilGzMemTell(gzFile file);
 extern void utilGBAFindSave(const u8 *, const int);
+extern int LengthFromString(const char * timestring);
 #endif

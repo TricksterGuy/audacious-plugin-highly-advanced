@@ -15,7 +15,6 @@
 
 #ifdef LINUX
 #include <stdarg.h>
-#include "types.h"
 #endif
 
 int emulating = 0;
@@ -89,28 +88,28 @@ void DisplayError (char * Message, ...) {
 	//SetActiveWindow(hMainWindow);
 }
 
-int GSFRun(char *);
+int GSFRun(const char *);
 
 int	soundInitialized = false;
 
-int GSFRun(char *filename)
+int GSFRun(const char *filename)
 {
   char tempName[2048];
 //  char file[2048];
 
   if(rom != NULL) {
     CPUCleanUp();
-	//remoteCleanUp(); 
-    emulating = false;   
+	//remoteCleanUp();
+    emulating = false;
   }
 
-  
+
   //utilGetBaseName(theApp.szFile, tempName);
   utilGetBaseName(filename, tempName);
 
   //_fullpath(file, tempName, 1024);		//NO CLUE WHAT THIS DOES
-  
-  
+
+
   //theApp.filename = file;
 
   //int index = theApp.filename.ReverseFind('.');
@@ -147,7 +146,7 @@ int GSFRun(char *filename)
     char *p = strrchr(tempName, '\\');
     if(p)
       *p = 0;
-	
+
 	{
 	    char buffer[5];
 	    strncpy(buffer, (const char *)&rom[0xac], 4);
@@ -158,7 +157,7 @@ int GSFRun(char *filename)
     //theApp.emulator = GBASystem;
 
   }
-    
+
   if(soundInitialized) {
       soundReset();
   } else {
@@ -173,14 +172,14 @@ int GSFRun(char *filename)
 	CPUInit((char *)NULL, false);				//don't use bios file
     CPUReset();
   }
- 
+
   emulating = true;
-  
+
   return true;
 }
 
 
-void GSFClose(void) 
+void GSFClose(void)
 {
   if(rom != NULL /*|| gbRom != NULL*/) {
     soundPause();
@@ -193,28 +192,28 @@ void GSFClose(void)
 
 #define EMU_COUNT 250000
 
-BOOL EmulationLoop(void) 
+bool EmulationLoop(void)
 {
   if(emulating /*&& !paused*/) {
     for(int i = 0; i < 2; i++) {
 		CPULoop(EMU_COUNT);
- 
-	    return TRUE;
+
+	    return true;
 	}
   }
-  return FALSE;
+  return false;
 
 }
 
 
-BOOL IsValidGSF ( BYTE Test[4] ) {
-	if ( *((DWORD *)&Test[0]) == 0x22465350 ) { return TRUE; }
-	return FALSE;
+bool IsValidGSF ( unsigned char Test[4] ) {
+	if ( *((unsigned int *)&Test[0]) == 0x22465350 ) { return true; }
+	return false;
 }
 
-BOOL IsTagPresent ( BYTE Test[5] ) {
-	if ( *((DWORD *)&Test[0]) == 0x4741545b && Test[4]==0x5D) {return TRUE;}
-	return FALSE;
+bool IsTagPresent ( unsigned char Test[5] ) {
+	if ( *((unsigned int *)&Test[0]) == 0x4741545b && Test[4]==0x5D) {return true;}
+	return false;
 }
 
 
@@ -248,7 +247,7 @@ void setupSound(void)
     //soundBufferTotalLen = 14700*2;
 	//soundBufferTotalLen = 576*2*10*2;
   }
-  sndBitsPerSample = 16; 
+  sndBitsPerSample = 16;
 
   systemSoundOn = true;
 }
